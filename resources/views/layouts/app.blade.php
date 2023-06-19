@@ -15,12 +15,13 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/js/category-read.js'])
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -71,6 +72,19 @@
                 </div>
             </div>
         </nav>
+        @auth
+            <nav class="navbar navbar-expand-lg bg-primary-subtle">
+                <div class="container">
+                    <div class="col-10">
+                        <a class="btn btn-sm btn-outline-primary me-2" style="line-height: 15px;" href="/create-budgeting">Create budgeting</a>
+                        <a class="btn btn-sm btn-outline-primary" style="line-height: 15px;" href="/category">Category</a>
+                    </div>
+                    <div class="col-2 text-end">
+                        <a class="btn btn-sm btn-outline-primary " style="line-height: 15px;" href="javascript:void(0)">Filter</a>
+                    </div>
+                </div>
+            </nav>
+        @endauth
 
         <main class="py-4">
             @yield('content')
