@@ -9,10 +9,12 @@ use Carbon\Carbon;
 class CategoryController extends Controller
 {
     public function index(){
-        $data['categories'] = Category::where('created_by', auth()->user()->id)
+        $data['categories'] = Category::with('budget:id')
+                        ->where('created_by', auth()->user()->id)
                         ->orderBy('created_at', 'desc')
-                        ->select('uuid', 'name', 'description', 'created_at')
+                        ->select('id', 'uuid', 'name', 'description', 'created_at')
                         ->paginate(18);
+        $data['javascript'] = 'category-read';
         return view('category.index',$data);
     }
 
@@ -35,8 +37,9 @@ class CategoryController extends Controller
     }
 
     public function show($uuid){
-        $category = Category::where('uuid', $uuid)
-                        ->select('uuid', 'name', 'description', 'created_at', 'updated_at')
+        $category = Category::with('budget:id,title,uuid')
+                        ->where('uuid', $uuid)
+                        ->select('id', 'uuid', 'name', 'description', 'created_at', 'updated_at')
                         ->first();
         return json_encode($category);
     }

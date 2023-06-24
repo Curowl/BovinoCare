@@ -33,6 +33,9 @@
                         <h5 class="card-title">{{$cat->name}}</h5>
                         <p class="card-text">{{substr($cat->description, 0, 50)}}</p>
                     </div>
+                    <div class="card-footer">
+                        Budgets : {{$cat->budget->count()}}
+                    </div>
                 </div>
             </div>
             @endforeach
@@ -64,6 +67,14 @@
             <p>Created at </p>
         </div>
         <div class="modal-footer">
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Budgets
+                </button>
+                <ul class="dropdown-menu">
+                  
+                </ul>
+            </div>
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
           <a type="button" href="" class="btn btn-outline-primary">Edit</a>
           <a type="button" href="" class="btn btn-outline-danger">Delete</a>

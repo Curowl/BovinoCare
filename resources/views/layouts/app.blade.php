@@ -15,7 +15,18 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    @vite(['resources/js/category-read.js'])
+    
+    @if(isset($javascript))
+        @if($javascript =='category-read')
+            @vite(['resources/js/category-read.js'])
+        @endif
+        @if($javascript =='budget-create')
+            @vite(['resources/js/budget-create.js'])
+        @endif
+        @if($javascript =='budget-edit')
+            @vite(['resources/js/budget-edit.js'])
+        @endif
+    @endif
 </head>
 <body>
     <div id="app">
@@ -76,7 +87,7 @@
             <nav class="navbar navbar-expand-lg bg-primary-subtle">
                 <div class="container">
                     <div class="col-10">
-                        <a class="btn btn-sm btn-outline-primary me-2" style="line-height: 15px;" href="/create-budgeting">Create budgeting</a>
+                        <a class="btn btn-sm btn-outline-primary me-2" style="line-height: 15px;" href="/budget">Budgeting</a>
                         <a class="btn btn-sm btn-outline-primary" style="line-height: 15px;" href="/category">Category</a>
                     </div>
                     <div class="col-2 text-end">
