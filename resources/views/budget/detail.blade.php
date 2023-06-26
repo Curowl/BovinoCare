@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <p><a href="/budget?page={{$paginationPage}}" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Back to budgets</a></p>
+            <p><a href="/budget?page={{$paginationPage}}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Back to budgets</a></p>
             <div class="card">
                 <div class="card-header">
                     <div class="row">
