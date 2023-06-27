@@ -3,7 +3,7 @@ import moment  from 'moment-timezone'
 
 
 const categoryCard = document.querySelectorAll('.category-card')
-const modalCategory= document.querySelector('.modal-content')
+const modalCategory= document.querySelector('.category-detail-modal')
 
 if(categoryCard){
     categoryCard.forEach((item)=>{
@@ -28,6 +28,10 @@ async function getCategoryDetail(uuid) {
 
 function displayIntoModal(uuid, name, description, created_at , updated_at, budget) {
     const searchParams = new URLSearchParams(window.location.search);
+    let sort        = searchParams.get('sortAlphabetic') ? searchParams.get('sortAlphabetic') : 'asc'
+    let dateStart   = searchParams.get('dateStart') ? searchParams.get('dateStart') : null
+    let dateEnd     = searchParams.get('dateEnd') ? searchParams.get('dateEnd') : null
+
     const page = searchParams.get('page') ? searchParams.get('page') : 1
 
     if(modalCategory){
@@ -37,8 +41,8 @@ function displayIntoModal(uuid, name, description, created_at , updated_at, budg
                                                             'Created at '+moment(created_at).tz('Asia/Jakarta').format('LLL')
                                                             : 
                                                             'Created at '+moment(created_at).tz('Asia/Jakarta').format('LLL')+'<br> Updated at '+moment(updated_at).tz('Asia/Jakarta').format('LLL') 
-        modalCategory.children[3].children[2].setAttribute('href', '/category/'+uuid+'/edit?page='+page)
-        modalCategory.children[3].children[3].setAttribute('href', '/category/'+uuid+'/delete?page='+page)
+        modalCategory.children[3].children[2].setAttribute('href', '/category/'+uuid+'/edit?page='+page+'&sortAlphabetic='+sort+'&dateStart='+dateStart+'&dateEnd='+dateEnd)
+        modalCategory.children[3].children[3].setAttribute('href', '/category/'+uuid+'/delete?page='+page+'&sortAlphabetic='+sort+'&dateStart='+dateStart+'&dateEnd='+dateEnd)
        
         let li = document.createElement('li')
         let a = document.createElement('a')

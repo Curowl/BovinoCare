@@ -8,12 +8,40 @@ use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        $data['page']   = 'category';
+        
+        $arsOrDesc      = 'asc';
+        if($request->query('sortAlphabetic')){
+            if($request->query('sortAlphabetic') == 'asc'){
+                $arsOrDesc = 'asc';
+            }else{
+                $arsOrDesc = 'desc';
+            }
+        }
+
         $data['categories'] = Category::with('budget:id')
                         ->where('created_by', auth()->user()->id)
-                        ->orderBy('created_at', 'desc')
+
+                        // filter date created
+                        ->where(function($query) use($request){
+                            if($request->query('dateStart') && $request->query('dateEnd')){
+                                $query->whereBetween('created_at', [$request->query('dateStart'), $request->query('dateEnd')]);
+                            }
+                            if($request->query('dateStart') && !$request->query('dateEnd')){
+                                $query->where('created_at', '>', $request->query('dateStart'));
+                            }
+                            if(!$request->query('dateStart') && $request->query('dateEnd')){
+                                $query->where('created_at', '<', $request->query('dateEnd'));
+                            }
+                        })
+
+                        // filter sortby alphabetic
+                        ->orderBy('name', $arsOrDesc)
+
                         ->select('id', 'uuid', 'name', 'description', 'created_at')
-                        ->paginate(18);
+                        ->paginate(18)
+                        ->withQueryString();
         $data['javascript'] = 'category-read';
         return view('category.index',$data);
     }
@@ -48,7 +76,7 @@ class CategoryController extends Controller
         $data['category'] = Category::where('uuid', $uuid)
                             ->select('uuid', 'name', 'description', 'created_at')
                             ->first();
-       $data['paginationPage']= $request->query('page');
+       $data['uri']= explode('/edit', $request->getRequestUri())[1];
         return view('category.edit',$data);
     }
 
@@ -71,7 +99,7 @@ class CategoryController extends Controller
         $data['category'] = Category::where('uuid', $uuid)
                         ->select('uuid', 'name', 'description', 'created_at')
                         ->first();
-        $data['paginationPage']= $request->query('page');
+        $data['uri']= explode('/delete', $request->getRequestUri())[1];
         return view('category.delete',$data);
     }
 

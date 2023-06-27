@@ -91,10 +91,90 @@
                         <a class="btn btn-sm btn-outline-primary" style="line-height: 15px;" href="/category">Category</a>
                     </div>
                     <div class="col-2 text-end">
-                        <a class="btn btn-sm btn-outline-primary " style="line-height: 15px;" href="javascript:void(0)">Filter</a>
+                        @if (isset($page))
+                            @if ($page =='budget')
+                                <button class="btn btn-sm btn-outline-primary " style="line-height: 15px;" data-bs-toggle="modal" data-bs-target="#budgetsFilter">Filter</button>
+                            @elseif($page == 'category')
+                                <button class="btn btn-sm btn-outline-primary " style="line-height: 15px;" data-bs-toggle="modal" data-bs-target="#categoryFilter">Filter</button>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </nav>
+            <div class="modal fade" id="budgetsFilter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="budgetsFilterLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-4" id="budgetsFilterLabel">Budgets Filter</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/budget" method="GET">
+                                <div class="mb-3">
+                                    <label class="form-label">Budget amount</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">Min</span>
+                                        <input type="number" class="form-control" placeholder="250000" name="minimumAmount">
+                                        <span class="input-group-text">Max</span>
+                                        <input type="number" class="form-control" placeholder="530000" name="maximumAmount">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Date Created</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" name="dateStart">
+                                        <span class="input-group-text">to</span>
+                                        <input type="date" class="form-control" name="dateEnd">
+                                    </div>
+                                </div>
+                                <div class="mb-3 text-end">
+                                    <button type="submit" class="btn btn-outline-primary">Apply</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="categoryFilter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="categoryFilterLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-4" id="categoryFilterLabel">Category Filter</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/category" method="GET">
+                                <div class="mb-3">
+                                    <label class="form-label">Sort by Alphabetic</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortAlphabetic" id="asc" value="asc">
+                                        <label class="form-check-label" for="asc">
+                                          Asc
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortAlphabetic" id="desc" value="desc" checked>
+                                        <label class="form-check-label" for="desc">
+                                          Desc
+                                        </label>
+                                      </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Date Created</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" name="dateStart">
+                                        <span class="input-group-text">to</span>
+                                        <input type="date" class="form-control" name="dateEnd">
+                                    </div>
+                                </div>
+                                <div class="mb-3 text-end">
+                                    <button type="submit" class="btn btn-outline-primary">Apply</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endauth
 
         <main class="py-4">

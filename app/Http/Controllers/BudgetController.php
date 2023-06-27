@@ -13,12 +13,40 @@ use Database\Factories\BudgetFactory;
 class BudgetController extends Controller
 {
     public function index(Request $request){
+        $data['page'] = 'budget';
         $data['budgets'] = Budget::with(['budgetDetail:budget_id,amount'])
                         ->where('created_by', auth()->user()->id)
+                        
+                        // filter amount
+                        ->where(function($query) use($request){
+                            if($request->query('minimumAmount') && $request->query('maximumAmount')){
+                                $query->whereBetween('maximum_amount', [$request->query('minimumAmount'), $request->query('maximumAmount')]);
+                            }
+                            if($request->query('minimumAmount') && !$request->query('maximumAmount')){
+                                $query->where('maximum_amount', '>', $request->query('minimumAmount'));
+                            }
+                            if(!$request->query('minimumAmount') && $request->query('maximumAmount')){
+                                $query->where('maximum_amount', '<', $request->query('maximumAmount'));
+                            }
+                        })
+
+                        // filter date created
+                        ->where(function($query) use($request){
+                            if($request->query('dateStart') && $request->query('dateEnd')){
+                                $query->whereBetween('created_at', [$request->query('dateStart'), $request->query('dateEnd')]);
+                            }
+                            if($request->query('dateStart') && !$request->query('dateEnd')){
+                                $query->where('created_at', '>', $request->query('dateStart'));
+                            }
+                            if(!$request->query('dateStart') && $request->query('dateEnd')){
+                                $query->where('created_at', '<', $request->query('dateEnd'));
+                            }
+                        })
                         ->orderBy('created_at', 'desc')
                         ->select('id', 'uuid', 'title', 'description', 'maximum_amount', 'created_at')
-                        ->paginate(12);
-        $data['paginationPage']= $request->query('page') ? $request->query('page') : 1;
+                        ->paginate(12)
+                        ->withQueryString();
+        $data['uri']= substr($request->getRequestUri(), 7); // remove /budget
         return view('budget.index',$data);
     }
 
@@ -75,7 +103,8 @@ class BudgetController extends Controller
                                 ->where('created_by', auth()->user()->id)
                                 ->select('id', 'uuid', 'title', 'description', 'maximum_amount', 'created_at')
                                 ->first();
-        $data['paginationPage']= $request->query('page') ? $request->query('page') : 1;
+        
+        $data['uri'] = str_replace('/budget'.'/'.$uuid, '', $request->getRequestUri());
         return view('budget.detail', $data);
     }
 
@@ -98,6 +127,7 @@ class BudgetController extends Controller
                             ->where('created_by', auth()->user()->id)
                             ->get();
         $data['javascript'] = 'budget-edit';
+        $data['uri'] = str_replace('/budget'.'/'.$uuid.'/edit', '', $request->getRequestUri());
         return view('budget.edit', $data);
     }
 
@@ -146,14 +176,14 @@ class BudgetController extends Controller
                     ->with('status', 'Success, budget updated! '.Carbon::now()->format('d/m/Y H:i'));
     }
 
-    public function delete($uuid){
+    public function delete(Request $request, $uuid){
 
         $data['budget'] = Budget::with(['category:id,uuid,name,description', 'budgetDetail:budget_id,uuid,amount,created_at'])
                                 ->where('uuid', $uuid)
                                 ->where('created_by', auth()->user()->id)
                                 ->select('id', 'uuid', 'title', 'description', 'maximum_amount', 'created_at')
                                 ->first();
-
+        $data['uri'] = str_replace('/budget'.'/'.$uuid.'/delete', '', $request->getRequestUri());
         return view('budget.delete',$data);
     }
 

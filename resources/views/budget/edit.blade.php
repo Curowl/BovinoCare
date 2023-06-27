@@ -104,7 +104,7 @@
                         <div class="row">
                             <div class="col">
                                 <button type="submit" id="submit" class="btn btn-outline-primary">Save</button>
-                                <a href="/budget/{{$budget->uuid}}" class="btn btn-outline-secondary">Cancel</a>
+                                <a href="/budget/{{$budget->uuid}}{{$uri}}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
                         </div>
                     </form>

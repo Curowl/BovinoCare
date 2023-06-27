@@ -78,7 +78,7 @@
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Yes, delete it !</button> &nbsp;
                                 </form>
-                                <a href="/budget/{{$budget->uuid}}" class="btn btn-sm btn-outline-secondary">Cancel</a>
+                                <a href="/budget/{{$budget->uuid}}{{$uri}}" class="btn btn-sm btn-outline-secondary">Cancel</a>
                             </div>
                         </div>
                     </div>
