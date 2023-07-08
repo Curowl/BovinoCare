@@ -55,7 +55,7 @@
                             <h5 class="card-title">{{$bud->title}}</h5>
                             <p class="card-text">{{substr($bud->description, 0, 70)}}</p>
                         </div>
-                        <a href="/budget/{{$bud->uuid}}?page={{$paginationPage}}" class="card-footer btn bg-primary-subtle" style="cursor: pointer">See detail</a>
+                        <a href="/budget/{{$bud->uuid}}{{$uri}}" class="card-footer btn bg-primary-subtle" style="cursor: pointer">See detail</a>
                     </div>
                 </div>
             @endforeach
