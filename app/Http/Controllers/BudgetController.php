@@ -46,6 +46,10 @@ class BudgetController extends Controller
                         ->select('id', 'uuid', 'title', 'description', 'maximum_amount', 'created_at')
                         ->paginate(12)
                         ->withQueryString();
+        $data['minimumAmount'] = $request->query('minimumAmount');
+        $data['maximumAmount'] = $request->query('maximumAmount');
+        $data['dateStart'] = $request->query('dateStart');
+        $data['dateEnd'] = $request->query('dateEnd');
         $data['uri']= substr($request->getRequestUri(), 7); // remove /budget
         return view('budget.index',$data);
     }

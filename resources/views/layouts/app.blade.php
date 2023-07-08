@@ -16,17 +16,22 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     
-    @if(isset($javascript))
-        @if($javascript =='category-read')
-            @vite(['resources/js/category-read.js'])
+    @auth
+        @if(isset($javascript))
+            @if($javascript =='category-read')
+                @vite(['resources/js/category-read.js'])
+            @endif
+            @if($javascript =='budget-create')
+                @vite(['resources/js/budget-create.js'])
+            @endif
+            @if($javascript =='budget-edit')
+                @vite(['resources/js/budget-edit.js'])
+            @endif
+            @if ($javascript =='report')
+                @vite(['resources/js/report.js'])
+            @endif
         @endif
-        @if($javascript =='budget-create')
-            @vite(['resources/js/budget-create.js'])
-        @endif
-        @if($javascript =='budget-edit')
-            @vite(['resources/js/budget-edit.js'])
-        @endif
-    @endif
+    @endauth
 </head>
 <body>
     <div id="app">
@@ -114,17 +119,17 @@
                                     <label class="form-label">Budget amount</label>
                                     <div class="input-group">
                                         <span class="input-group-text">Min</span>
-                                        <input type="number" class="form-control" placeholder="250000" name="minimumAmount">
+                                        <input type="number" class="form-control" name="minimumAmount" @if (isset($minimumAmount)) value="{{$minimumAmount}}" @endif>
                                         <span class="input-group-text">Max</span>
-                                        <input type="number" class="form-control" placeholder="530000" name="maximumAmount">
+                                        <input type="number" class="form-control" name="maximumAmount" @if (isset($maximumAmount)) value="{{$maximumAmount}}" @endif>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Date Created</label>
                                     <div class="input-group">
-                                        <input type="date" class="form-control" name="dateStart">
+                                        <input type="date" class="form-control" name="dateStart" @if (isset($dateStart)) value="{{$dateStart}}" @endif>
                                         <span class="input-group-text">to</span>
-                                        <input type="date" class="form-control" name="dateEnd">
+                                        <input type="date" class="form-control" name="dateEnd" @if (isset($dateEnd)) value="{{$dateEnd}}" @endif>
                                     </div>
                                 </div>
                                 <div class="mb-3 text-end">
@@ -147,13 +152,13 @@
                                 <div class="mb-3">
                                     <label class="form-label">Sort by Alphabetic</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sortAlphabetic" id="asc" value="asc">
+                                        <input class="form-check-input" type="radio" name="sortAlphabetic" id="asc" value="asc" @if (isset($sortAlphabetic) && $sortAlphabetic == 'asc') checked @endif>
                                         <label class="form-check-label" for="asc">
                                           Asc
                                         </label>
                                       </div>
                                       <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sortAlphabetic" id="desc" value="desc" checked>
+                                        <input class="form-check-input" type="radio" name="sortAlphabetic" id="desc" value="desc" @if (isset($sortAlphabetic) && $sortAlphabetic == 'desc') checked @endif>
                                         <label class="form-check-label" for="desc">
                                           Desc
                                         </label>
@@ -162,9 +167,9 @@
                                 <div class="mb-3">
                                     <label class="form-label">Date Created</label>
                                     <div class="input-group">
-                                        <input type="date" class="form-control" name="dateStart">
+                                        <input type="date" class="form-control" name="dateStart" @if (isset($dateStart)) value="{{$dateStart}}" @endif>
                                         <span class="input-group-text">to</span>
-                                        <input type="date" class="form-control" name="dateEnd">
+                                        <input type="date" class="form-control" name="dateEnd" @if (isset($dateEnd)) value="{{$dateEnd}}" @endif>
                                     </div>
                                 </div>
                                 <div class="mb-3 text-end">
