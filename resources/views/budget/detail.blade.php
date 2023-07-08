@@ -65,10 +65,10 @@
                             @foreach($budget->category as $cat)
                                 <div class="col">
                                 <div class="card h-100">
-                                    <div class="card-body">
-                                    <h5 class="card-title">{{$cat->name}}</h5>
-                                    <p class="card-text">{{substr($cat->description, 0, 50)}}</p>
-                                    </div>
+                                    <a href="/category/{{$cat->uuid}}/detail" class="card-body" style="text-decoration: none">
+                                        <h5 class="card-title">{{$cat->name}}</h5>
+                                        <p class="card-text">{{substr($cat->description, 0, 50)}}</p>
+                                    </a>
                                 </div>
                                 </div>
                             @endforeach

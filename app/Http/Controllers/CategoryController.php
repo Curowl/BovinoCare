@@ -42,6 +42,9 @@ class CategoryController extends Controller
                         ->select('id', 'uuid', 'name', 'description', 'created_at')
                         ->paginate(18)
                         ->withQueryString();
+        $data['dateStart'] = $request->query('dateStart');
+        $data['dateEnd'] = $request->query('dateEnd');
+        $data['sortAlphabetic'] = $request->query('sortAlphabetic');
         $data['javascript'] = 'category-read';
         return view('category.index',$data);
     }
@@ -69,6 +72,22 @@ class CategoryController extends Controller
                         ->where('uuid', $uuid)
                         ->select('id', 'uuid', 'name', 'description', 'created_at', 'updated_at')
                         ->first();
+        return json_encode($category);
+    }
+
+    public function detail($uuid){
+        $data['category'] = Category::with('budget:id,title,uuid,description', 'budget.budgetDetail:budget_id,amount')
+                        ->where('uuid', $uuid)
+                        ->where('created_by', auth()->user()->id)
+                        ->select('id', 'uuid', 'name', 'description', 'created_at', 'updated_at')
+                        ->first();
+        return view('category.detail', $data);
+    }
+
+    public function showAll(){
+        $category = Category::where('created_by', auth()->user()->id)
+                        ->select('id', 'uuid', 'name')
+                        ->get();
         return json_encode($category);
     }
 

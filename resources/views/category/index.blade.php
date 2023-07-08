@@ -75,7 +75,7 @@
                   
                 </ul>
             </div>
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <a type="button" href="" class="btn btn-outline-secondary">See detail</a>
           <a type="button" href="" class="btn btn-outline-primary">Edit</a>
           <a type="button" href="" class="btn btn-outline-danger">Delete</a>
         </div>

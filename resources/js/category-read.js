@@ -29,8 +29,8 @@ async function getCategoryDetail(uuid) {
 function displayIntoModal(uuid, name, description, created_at , updated_at, budget) {
     const searchParams = new URLSearchParams(window.location.search);
     let sort        = searchParams.get('sortAlphabetic') ? searchParams.get('sortAlphabetic') : 'asc'
-    let dateStart   = searchParams.get('dateStart') ? searchParams.get('dateStart') : null
-    let dateEnd     = searchParams.get('dateEnd') ? searchParams.get('dateEnd') : null
+    let dateStart   = searchParams.get('dateStart') ? searchParams.get('dateStart') : ''
+    let dateEnd     = searchParams.get('dateEnd') ? searchParams.get('dateEnd') : ''
 
     const page = searchParams.get('page') ? searchParams.get('page') : 1
 
@@ -41,6 +41,7 @@ function displayIntoModal(uuid, name, description, created_at , updated_at, budg
                                                             'Created at '+moment(created_at).tz('Asia/Jakarta').format('LLL')
                                                             : 
                                                             'Created at '+moment(created_at).tz('Asia/Jakarta').format('LLL')+'<br> Updated at '+moment(updated_at).tz('Asia/Jakarta').format('LLL') 
+        modalCategory.children[3].children[1].setAttribute('href', '/category/'+uuid+'/detail?page='+page+'&sortAlphabetic='+sort+'&dateStart='+dateStart+'&dateEnd='+dateEnd)
         modalCategory.children[3].children[2].setAttribute('href', '/category/'+uuid+'/edit?page='+page+'&sortAlphabetic='+sort+'&dateStart='+dateStart+'&dateEnd='+dateEnd)
         modalCategory.children[3].children[3].setAttribute('href', '/category/'+uuid+'/delete?page='+page+'&sortAlphabetic='+sort+'&dateStart='+dateStart+'&dateEnd='+dateEnd)
        
