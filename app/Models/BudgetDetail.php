@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Exception;
 
-class Category extends Model
+class BudgetDetail extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $connection = 'budget';
-    protected $table = 'categories';
+    protected $table = 'budget_detail';
 
     protected static function boot(){
         parent::boot();
 
         static::creating(function ($model){
             try {
-                $model->uuid = Str::slug($model->name, '-').'-'.Str::random(10);
+                $model->uuid = Str::random(20);
             } catch (Exception $e) {
                 abort(500, $e->getMessage());
             }
@@ -33,6 +33,6 @@ class Category extends Model
     }
 
     public function budget(){
-        return $this->belongsToMany(Budget::class);
+        return $this->hasOne(Budget::class);
     }
 }

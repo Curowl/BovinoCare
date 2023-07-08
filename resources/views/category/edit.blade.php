@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="/category/{{$category->uuid}}?page={{$paginationPage}}" method="POST" class="needs-validation" novalidate>
+                    <form action="/category/{{$category->uuid}}{{$uri}}" method="POST" class="needs-validation" novalidate>
                         @method('PUT')
                         @csrf
                         <div class="row mb-3">
@@ -46,7 +46,7 @@
                         <div class="row">
                             <div class="col">
                                 <button type="submit" class="btn btn-outline-primary">Save</button>
-                                <a href="/category?page={{$paginationPage}}" class="btn btn-outline-secondary">Cancel</a>
+                                <a href="/category{{$uri}}" class="btn btn-outline-secondary">Cancel</a>
                             </div>
                         </div>
                     </form>

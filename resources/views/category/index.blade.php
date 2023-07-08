@@ -33,6 +33,9 @@
                         <h5 class="card-title">{{$cat->name}}</h5>
                         <p class="card-text">{{substr($cat->description, 0, 50)}}</p>
                     </div>
+                    <div class="card-footer">
+                        Budgets : {{$cat->budget->count()}}
+                    </div>
                 </div>
             </div>
             @endforeach
@@ -52,7 +55,7 @@
 </div>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
+      <div class="modal-content category-detail-modal">
         <div class="modal-header">
           <h1 class="modal-title fs-4" id="staticBackdropLabel">Modal title</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -64,7 +67,15 @@
             <p>Created at </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Budgets
+                </button>
+                <ul class="dropdown-menu">
+                  
+                </ul>
+            </div>
+          <a type="button" href="" class="btn btn-outline-secondary">See detail</a>
           <a type="button" href="" class="btn btn-outline-primary">Edit</a>
           <a type="button" href="" class="btn btn-outline-danger">Delete</a>
         </div>

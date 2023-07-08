@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Exception;
 
-class Category extends Model
+class Budget extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $connection = 'budget';
-    protected $table = 'categories';
+    protected $table = 'budgets';
 
     protected static function boot(){
         parent::boot();
 
         static::creating(function ($model){
             try {
-                $model->uuid = Str::slug($model->name, '-').'-'.Str::random(10);
+                $model->uuid = Str::slug($model->title, '-').'-'.Str::random(10);
             } catch (Exception $e) {
                 abort(500, $e->getMessage());
             }
@@ -32,7 +32,11 @@ class Category extends Model
         return $this->setConnection('mysql')->hasOne(User::class, 'id', 'created_by');
     }
 
-    public function budget(){
-        return $this->belongsToMany(Budget::class);
+    public function category(){
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function budgetDetail(){
+        return $this->hasMany(BudgetDetail::class);
     }
 }

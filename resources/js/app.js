@@ -18,3 +18,7 @@ import './bootstrap';
       }, false)
     })
   })()
+
+  // bootstrap 5 tags : https://www.npmjs.com/package/bootstrap5-tags
+  import Tags from "bootstrap5-tags";
+  Tags.init();
